@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+
+# Environment
+.env
+.env.local
+
+# Build
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
