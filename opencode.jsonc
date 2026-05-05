@@ -1,0 +1,88 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  "enabled_providers": ["openai"],
+
+  "default_agent": "project-manager-tech",
+
+  "model": "{env:OPENCODE_MODEL}",
+  "small_model": "{env:OPENCODE_SMALL_MODEL}",
+
+  "instructions": [
+    "AGENTS.md",
+    "README.md",
+    "product/README.md",
+    "tasks/*.md",
+    "documents/06_cahier_des_charges/rendu_principal.md",
+    "documents/07_gestion_de_projet/rendu_principal.md",
+    "documents/08_architecture/rendu_principal.md"
+  ],
+
+  "permission": {
+    "*": "ask",
+
+    "edit": "ask",
+
+    "bash": {
+      "*": "ask",
+      "git status*": "allow",
+      "git diff*": "allow",
+      "git log*": "allow",
+      "ls*": "allow",
+      "find*": "allow",
+      "grep*": "allow",
+      "python -m pytest*": "allow",
+      "pytest*": "allow",
+      "ruff*": "allow",
+      "git push*": "deny",
+      "rm -rf*": "deny"
+    },
+
+    "skill": {
+      "*": "allow"
+    },
+
+    "task": {
+      "*": "ask",
+      "backend-python-dev": "allow",
+      "qa-tester": "allow",
+      "devops-engineer": "ask",
+      "security-tech-lead": "allow"
+    }
+  },
+
+  "agent": {
+    "project-manager-tech": {
+      "mode": "primary",
+      "description": "Chef de projet technique Omninet : planification, backlog, priorités et coordination.",
+      "prompt": "{file:.opencode/agents/project-manager-tech.md}"
+    },
+
+    "backend-python-dev": {
+      "mode": "subagent",
+      "description": "Développeur backend Python/FastAPI pour Omninet.",
+      "prompt": "{file:.opencode/agents/backend-python-dev.md}"
+    },
+
+    "qa-tester": {
+      "mode": "subagent",
+      "description": "Testeur QA Python avec pytest.",
+      "prompt": "{file:.opencode/agents/qa-tester.md}"
+    },
+
+    "devops-engineer": {
+      "mode": "subagent",
+      "description": "DevOps Docker, scripts, variables d’environnement et CI/CD.",
+      "prompt": "{file:.opencode/agents/devops-engineer.md}"
+    },
+
+    "security-tech-lead": {
+      "mode": "subagent",
+      "description": "Security Tech Lead : audit sécurité, secrets, RBAC, payloads et scénarios cyber.",
+      "prompt": "{file:.opencode/agents/security-tech-lead.md}",
+      "permission": {
+        "edit": "deny"
+      }
+    }
+  }
+}
