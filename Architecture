@@ -1,0 +1,67 @@
+1. Objectif 
+
+    L'objectif de cette architecture est de concevoir un outil de supervision et d'analyse réseau orienté cybersécurité.  
+
+    Le système doit permettre de mapper un réseau informatique, de détecter les équipements connectés et de scanner des plages d'adresses IP.  
+
+    L'architecture doit soutenir l'identification des ports ouverts, la récupération d'informations sur les services, l'observation du trafic réseau et la détection d'événements suspects.  
+
+    Le but final est de fournir une base applicative fonctionnelle capable de générer des alertes et d'exporter des rapports de manière fiable.  
+
+2. Stack cible 
+
+    Backend : Le cœur de l'application est développé en Python avec le framework FastAPI pour créer les API et gérer la logique métier.  
+
+    Frontend : L'interface web utilisateur est construite en HTML, CSS et JavaScript, avec l'utilisation de bibliothèques CSS comme Bootstrap ou Tailwind CSS. 
+
+    Données et Export : Le formatage et l'exportation des données issues de l'analyse réseau se font en JSON ou en CSV.  
+
+    Persistance locale : Une base de données relationnelle légère de type SQLite est pertinente pour stocker la configuration, l'historique des scans et le journal des alertes sans alourdir le déploiement. 
+
+3. Principes d'architecture 
+
+    Séparation des responsabilités : Le système découple strictement le moteur d'analyse réseau en backend de l'interface d'affichage web en frontend. 
+
+    Sécurité dès la conception : La sécurité de l'application est intégrée nativement dans la conception de l'architecture et lors de sa réalisation technique.  
+
+    Modularité et Légèreté : La solution est pensée pour être déployée localement sur un réseau interne de manière simple.  
+
+    Exploitabilité des données : L'architecture garantit la production de résultats directement exploitables sous forme de logs, d'alertes visuelles et de rapports exportables.  
+
+4. Composants logiques du système 
+
+    Module de Découverte : Ce service backend se charge du scan actif des adresses IP et de l'identification des ports et services exposés.  
+
+    Sonde de Trafic : Ce composant écoute passivement les interfaces réseau pour observer le trafic en temps réel et extraire les métadonnées des paquets.  
+
+    Moteur de Détection : Ce bloc logique analyse les données collectées pour identifier les comportements malveillants et générer des alertes de sécurité.  
+
+    API Core : Ce routeur central sous FastAPI expose les endpoints sécurisés permettant au frontend de requêter les données et de lancer des actions de scan. 
+
+    Interface de Restitution : Le tableau de bord web consomme les API pour afficher la cartographie, lister les alertes et proposer les boutons d'export. 
+
+5. Flux de données 
+
+    Acquisition : Les bibliothèques Python capturent les trames réseau et exécutent les requêtes de scan vers les équipements cibles. 
+
+    Traitement : Le backend nettoie les données brutes, identifie les anomalies selon des règles prédéfinies et structure l'information. 
+
+    Stockage : Les événements significatifs et l'état du réseau sont sauvegardés dans la base de données locale. 
+
+    Restitution : Le frontend interroge l'API à intervalles réguliers pour rafraîchir l'interface visuelle et afficher les nouvelles alertes à l'utilisateur. 
+
+6. Architecture de sécurité applicative 
+
+    Authentification : L'accès à l'interface web et aux endpoints de l'API est protégé par un système d'authentification pour éviter qu'un utilisateur non autorisé ne lance des scans sur le réseau. 
+
+    Validation des entrées : Toutes les données saisies par l'utilisateur, notamment les plages d'adresses IP à scanner, sont strictement validées par FastAPI pour prévenir les injections de commandes système. 
+
+    Gestion des privilèges : Le backend s'exécute avec les droits minimums nécessaires pour capturer le trafic réseau et scanner les ports, limitant ainsi l'impact en cas de compromission de l'application. 
+
+7. Stratégie de déploiement 
+
+    Conteneurisation : L'application peut être packagée sous forme de conteneurs Docker pour garantir que le backend, le frontend et les dépendances réseau s'exécutent de manière identique sur n'importe quel environnement. 
+
+    Déploiement on-premise : L'installation se fait localement ou sur un serveur interne pour garantir que les données d'analyse réseau ne sortent pas du périmètre de l'organisation. 
+
+ 
