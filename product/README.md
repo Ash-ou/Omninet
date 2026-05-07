@@ -57,11 +57,21 @@ make up
 | POST    | `/auth/login`           | Obtenir un token JWT         | Non  |
 | POST    | `/auth/register`        | Créer un utilisateur         | Non  |
 | GET     | `/telemetry/heartbeat`  | Heartbeat endpoint           | Oui  |
-| POST    | `/events/`              | Créer un événement           | Oui  |
-| GET     | `/events/`              | Lister les événements        | Oui  |
-| POST    | `/alerts/`              | Créer une alerte             | Oui  |
-| GET     | `/alerts/`              | Lister les alertes           | Oui  |
-| GET     | `/audit/logs`           | Consulter les logs d'audit   | Oui  |
+| POST    | `/events`               | Créer un événement           | Oui  |
+| GET     | `/events`               | Lister les événements        | Oui  |
+| POST    | `/alerts`               | Créer une alerte             | Oui  |
+| GET     | `/alerts`               | Lister les alertes           | Oui  |
+| GET     | `/alerts/{id}/acknowledge` | Acquitter une alerte      | Admin |
+| GET     | `/alerts/{id}/resolve`  | Résoudre une alerte          | Admin |
+| GET     | `/telemetry/endpoints`  | Lister les endpoints         | Oui  |
+| POST    | `/discovery/scan`       | Lancer un scan               | Oui  |
+| GET     | `/discovery/scans`      | Résultats des scans          | Oui  |
+| GET     | `/assets`               | Inventaire des assets        | Oui  |
+| GET     | `/audit`                | Logs d'audit                 | Oui  |
+| GET     | `/reports/kpi`          | KPI dashboard                | Oui  |
+| GET     | `/reports/events`       | Export événements (CSV/JSON) | Oui  |
+| GET     | `/reports/alerts`       | Export alertes (CSV/JSON)    | Oui  |
+| GET     | `/reports/scans`        | Export scans (CSV/JSON)      | Oui  |
 
 ## Commandes utiles
 
