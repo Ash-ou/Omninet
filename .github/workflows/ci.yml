@@ -1,0 +1,126 @@
+# ──────────────────────────────────────────────
+# Omninet — Pipeline CI
+# ──────────────────────────────────────────────
+# Déclenché sur push et pull_request vers main
+# Jobs: lint, test, security
+# ──────────────────────────────────────────────
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  # ── Lint: ruff + black ──────────────────────
+  lint:
+    name: Lint & Format Check
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: product/backend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.14
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run ruff (lint)
+        run: ruff check .
+
+      - name: Run black (format check)
+        run: black --check .
+
+  # ── Tests: pytest ───────────────────────────
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: product/backend
+
+    env:
+      OMNINET_SECRET_KEY: ${{ secrets.OMNINET_SECRET_KEY || 'test-secret-key-for-ci-1234567890' }}
+      OMNINET_AGENT_TOKEN: ${{ secrets.OMNINET_AGENT_TOKEN || 'test-agent-token-for-ci' }}
+      OMNINET_DEBUG: "true"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.14
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run pytest
+        run: pytest -v --tb=short
+
+  # ── Security: bandit + pip-audit ────────────
+  security:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: product/backend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.14
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run bandit (security lint)
+        run: bandit -r . -f json -o bandit-report.json || true
+        continue-on-error: true
+
+      - name: Upload bandit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bandit-report
+          path: product/backend/bandit-report.json
+          if-no-files-found: ignore
+
+      - name: Run pip-audit (vulnerability scan)
+        run: pip-audit --format json --output pip-audit-report.json || true
+        continue-on-error: true
+
+      - name: Upload pip-audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pip-audit-report
+          path: product/backend/pip-audit-report.json
+          if-no-files-found: ignore

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Omninet SOC - Dashboard</title>
+    <link rel="stylesheet" href="/ui/assets/styles.css" />
+  </head>
+  <body data-page="dashboard">
+    <header class="topbar">
+      <div class="topbar-brand">Omninet SOC</div>
+      <nav class="topbar-nav" aria-label="Navigation principale">
+        <a href="/ui" data-nav="dashboard">Dashboard</a>
+        <a href="/ui/alerts" data-nav="alerts">Alertes</a>
+        <a href="/ui/events" data-nav="events">Événements</a>
+        <a href="/ui/endpoints" data-nav="endpoints">Endpoints</a>
+        <a href="/ui/scans" data-nav="scans">Scans</a>
+      </nav>
+    </header>
+
+    <main class="layout">
+      <section class="hero card">
+        <h1>Centre de supervision (MVP)</h1>
+        <p>
+          Vue consolidée de l’activité SOC : authentification, indicateurs temps réel et accès rapide aux ressources critiques.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Authentification analyste</h2>
+        <form id="login-form" class="form-grid">
+          <div class="field">
+            <label for="username">Username</label>
+            <input id="username" name="username" type="text" autocomplete="username" required />
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required />
+          </div>
+          <button type="submit" class="btn-primary">Se connecter</button>
+        </form>
+        <div id="status" class="status" role="status" aria-live="polite"></div>
+        <div id="loading-indicator" class="loading hidden" role="status" aria-live="polite">Chargement…</div>
+      </section>
+
+      <section class="card">
+        <div class="section-head">
+          <h2>KPI SOC</h2>
+          <button id="refresh-dashboard" type="button" class="btn-secondary">Rafraîchir</button>
+        </div>
+
+        <div class="kpi-grid">
+          <article class="kpi-card">
+            <h3>Alertes nouvelles</h3>
+            <p id="count-alerts-new" class="kpi-value">-</p>
+          </article>
+          <article class="kpi-card">
+            <h3>Alertes acquittées</h3>
+            <p id="count-alerts-ack" class="kpi-value">-</p>
+          </article>
+          <article class="kpi-card">
+            <h3>Événements</h3>
+            <p id="count-events-total" class="kpi-value">-</p>
+          </article>
+          <article class="kpi-card">
+            <h3>Endpoints</h3>
+            <p id="count-endpoints-total" class="kpi-value">-</p>
+          </article>
+          <article class="kpi-card">
+            <h3>Scans</h3>
+            <p id="count-scans-total" class="kpi-value">-</p>
+          </article>
+          <article class="kpi-card">
+            <h3>Événements (24h)</h3>
+            <p id="count-events-24h" class="kpi-value">-</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-head">
+          <h2>Graphes KPI</h2>
+        </div>
+
+        <div class="charts-grid">
+          <div class="chart-container">
+            <h3>Alertes par sévérité</h3>
+            <canvas id="chart-alerts-severity" width="400" height="300"></canvas>
+          </div>
+          <div class="chart-container">
+            <h3>Alertes par statut</h3>
+            <canvas id="chart-alerts-status" width="400" height="300"></canvas>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="/ui/assets/app.js"></script>
+  </body>
+</html>

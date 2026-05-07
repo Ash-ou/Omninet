@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Omninet SOC - Scans</title>
+    <link rel="stylesheet" href="/ui/assets/styles.css" />
+  </head>
+  <body data-page="scans">
+    <header class="topbar">
+      <div class="topbar-brand">Omninet SOC</div>
+      <nav class="topbar-nav" aria-label="Navigation principale">
+        <a href="/ui" data-nav="dashboard">Dashboard</a>
+        <a href="/ui/alerts" data-nav="alerts">Alertes</a>
+        <a href="/ui/events" data-nav="events">Événements</a>
+        <a href="/ui/endpoints" data-nav="endpoints">Endpoints</a>
+        <a href="/ui/scans" data-nav="scans">Scans</a>
+      </nav>
+    </header>
+
+    <main class="layout">
+      <section class="hero card">
+        <h1>Simulation de scans</h1>
+        <p>Génération contrôlée d’événements de scan pour tester la chaîne de détection SOC.</p>
+      </section>
+
+      <section class="card">
+        <h2>Authentification analyste</h2>
+        <form id="login-form" class="form-grid">
+          <div class="field">
+            <label for="username">Username</label>
+            <input id="username" name="username" type="text" autocomplete="username" required />
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required />
+          </div>
+          <button type="submit" class="btn-primary">Se connecter</button>
+        </form>
+        <div id="status" class="status" role="status" aria-live="polite"></div>
+        <div id="loading-indicator" class="loading hidden" role="status" aria-live="polite">Chargement…</div>
+      </section>
+
+      <section class="card">
+        <h2>Scan simulé</h2>
+        <form id="scan-form" class="form-grid">
+          <div class="field">
+            <label for="scan-endpoint-id">endpoint_id</label>
+            <input id="scan-endpoint-id" name="endpoint_id" type="text" required />
+          </div>
+          <div class="field">
+            <label for="scan-target">cible</label>
+            <input id="scan-target" name="target" type="text" required />
+          </div>
+          <div class="field">
+            <label for="scan-type">type scan</label>
+            <select id="scan-type" name="scan_type">
+              <option value="ping">ping</option>
+              <option value="port">port</option>
+              <option value="service">service</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="scan-severity">severity</label>
+            <select id="scan-severity" name="severity">
+              <option value="low">low</option>
+              <option value="medium">medium</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-primary">Lancer la simulation</button>
+        </form>
+      </section>
+
+      <section class="card">
+        <h2>Résultat</h2>
+        <pre id="scan-result" class="result-block">Aucun scan simulé.</pre>
+      </section>
+    </main>
+
+    <script src="/ui/assets/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+# ──────────────────────────────────────────────
+# Omninet — Pre-commit Configuration
+# ──────────────────────────────────────────────
+# Install: pip install pre-commit
+# Setup: pre-commit install
+# Run all: pre-commit run --all-files
+# ──────────────────────────────────────────────
+
+repos:
+  # ── Ruff: Linting rapide ────────────────────
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.8.0
+    hooks:
+      - id: ruff
+        args: [--fix]
+        types_or: [python]
+
+  # ── Black: Formatage de code ────────────────
+  - repo: https://github.com/psf/black
+    rev: 24.10.0
+    hooks:
+      - id: black
+        types_or: [python]

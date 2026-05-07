@@ -1,0 +1,157 @@
+# ──────────────────────────────────────────────
+# Omninet — Lab SOC reproductible
+# ──────────────────────────────────────────────
+# Services :
+#   soc       — Backend FastAPI (port 8000)
+#   endpoint  — Endpoint simulé (alpine)
+#   attacker  — Container d'attaque simulée (alpine)
+#
+# Profil Production (décommenter pour activer) :
+#   nginx     — Reverse proxy avec TLS
+#   ──────────────────────────────────────────────
+
+services:
+  # ── Serveur SOC (backend FastAPI) ──────────
+  soc:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: omninet-soc
+    # En production, ne pas exposer directement le port 8000
+    # Le backend sera accessible via le reverse proxy sur le réseau interne
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - OMNINET_DEBUG=${OMNINET_DEBUG:-false}
+    networks:
+      - omninet-lab
+    volumes:
+      # Volume pour persister la base SQLite
+      - omninet-data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+    # ── Hardening Docker (recommandé pour production) ──
+    # Décommenter les lignes suivantes :
+    # read_only: true
+    # tmpfs:
+    #   - /tmp:noexec,nosuid,size=64M
+    #   - /app/logs:noexec,nosuid,size=32M
+    # cap_drop:
+    #   - ALL
+    # security_opt:
+    #   - no-new-privileges:true
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '1.0'
+    #       memory: 512M
+    #     reservations:
+    #       cpus: '0.5'
+    #       memory: 256M
+
+  # ── Serveur Endpoint (simulé) ──────────────
+  endpoint:
+    image: alpine:latest
+    container_name: omninet-endpoint
+    # Script d'init qui installe curl puis lance le heartbeat
+    command: sh /scripts/init-alpine.sh /scripts/heartbeat.sh
+    networks:
+      - omninet-lab
+    volumes:
+      # Montage des scripts en lecture seule
+      - ./scripts:/scripts:ro
+    environment:
+      # Token agent pour l'authentification des heartbeats
+      - OMNINET_AGENT_TOKEN=${OMNINET_AGENT_TOKEN:-change-me-agent-token}
+    depends_on:
+      soc:
+        condition: service_healthy
+    restart: unless-stopped
+    # ── Hardening (recommandé pour production) ──
+    # read_only: true
+    # tmpfs:
+    #   - /tmp:noexec,nosuid,size=16M
+    # cap_drop:
+    #   - ALL
+    # cap_add:
+    #   - NET_RAW  # Si besoin de ping/traceroute
+
+  # ── Serveur Attacker (simulé) ──────────────
+  attacker:
+    image: alpine:latest
+    container_name: omninet-attacker
+    # Script d'init qui installe curl puis lance la simulation d'attaques
+    command: sh /scripts/init-alpine.sh /scripts/simulate-attack.sh
+    networks:
+      - omninet-lab
+    volumes:
+      # Montage des scripts en lecture seule
+      - ./scripts:/scripts:ro
+    environment:
+      # Credentials admin pour obtenir le token JWT
+      - OMNINET_ADMIN_USERNAME=${OMNINET_ADMIN_USERNAME:-admin}
+      - OMNINET_ADMIN_PASSWORD=${OMNINET_ADMIN_PASSWORD:-admin}
+    depends_on:
+      soc:
+        condition: service_healthy
+    restart: unless-stopped
+    # ── Hardening (recommandé pour production) ──
+    # read_only: true
+    # tmpfs:
+    #   - /tmp:noexec,nosuid,size=16M
+    # cap_drop:
+    #   - ALL
+
+  # ── Reverse Proxy Nginx (PRODUCTION UNIQUEMENT) ──
+  # Décommenter ce bloc pour activer le reverse proxy avec TLS
+  #
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: omninet-nginx
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+  #     - ./nginx/ssl:/etc/nginx/ssl:ro
+  #     - ./nginx/logs:/var/log/nginx
+  #   depends_on:
+  #     - soc
+  #   networks:
+  #     - omninet-lab
+  #   restart: unless-stopped
+  #   security_opt:
+  #     - no-new-privileges:true
+  #   read_only: true
+  #   tmpfs:
+  #     - /tmp:noexec,nosuid,size=32M
+  #   cap_drop:
+  #     - ALL
+  #
+  # Note : Ne pas oublier de :
+  # 1. Créer le dossier ./nginx/ avec la configuration (voir SECURITY.md)
+  # 2. Générer ou obtenir des certificats TLS (Let's Encrypt ou CA interne)
+  # 3. Modifier le service 'soc' pour ne plus exposer le port 8000 directement :
+  #    - Commenter les lignes 'ports:' dans 'soc'
+  #    - Ajouter 'expose: ["8000"]' à la place
+
+# ── Réseau isolé ─────────────────────────────
+networks:
+  omninet-lab:
+    driver: bridge
+    name: omninet-lab
+    # En production, si les containers n'ont pas besoin d'accès Internet :
+    # internal: true
+
+# ── Volumes nommés ──────────────────────────
+volumes:
+  # Volume pour persister la base de données SQLite du SOC
+  omninet-data:
+    name: omninet-data
