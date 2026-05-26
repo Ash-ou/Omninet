@@ -1,0 +1,105 @@
+# Cahier des charges technique – OmniNet
+
+Projet porté par une entreprise souhaitant développer une nouvelle solution de supervision et d’analyse réseau orientée cybersécurité.
+
+## 1. Contexte et origine du besoin
+
+OmniNet est un projet initié par une entreprise souhaitant concevoir une nouvelle solution de supervision réseau capable de centraliser la découverte des équipements, le scan des adresses IP, l’identification des ports ouverts, la visualisation de l’activité réseau, la détection de comportements suspects et la génération de rapports exploitables.
+
+Le besoin naît du constat qu’il existe sur le marché des outils puissants, mais souvent fragmentés, complexes à exploiter ou trop orientés infrastructure lourde. L’entreprise souhaite disposer d’une solution plus légère, plus lisible et plus adaptable à des environnements de taille modeste ou intermédiaire, tout en conservant un niveau de fiabilité et de crédibilité suffisant pour un usage professionnel.
+
+## 2. Enjeux du projet
+
+L’enjeu principal est de proposer un outil unique permettant d’observer un réseau de manière simple mais efficace. L’entreprise souhaite réduire le nombre d’outils nécessaires pour obtenir une vision opérationnelle du réseau, faciliter la prise de décision et accélérer la détection d’incidents ou d’anomalies.
+
+Les enjeux secondaires concernent la différenciation sur le marché, la création d’une proposition de valeur claire, la capacité à déployer la solution sur des environnements variés et la possibilité d’évoluer ensuite vers une offre commerciale plus complète.
+
+## 3. Objectifs fonctionnels
+
+- Découvrir automatiquement les équipements connectés au réseau.
+- Scanner une plage d’adresses IP configurable.
+- Identifier les ports ouverts sur les hôtes détectés.
+- Collecter des informations sur les services réseau exposés.
+- Observer le trafic réseau dans un cadre contrôlé.
+- Détecter des comportements inhabituels ou potentiellement malveillants.
+- Générer des alertes visibles et exploitables.
+- Exporter des rapports au format JSON ou CSV.
+
+## 4. Périmètre du produit
+
+Le périmètre retenu couvre un réseau local, un segment réseau maîtrisé ou un environnement de démonstration. OmniNet ne vise pas, dans sa première version, à remplacer un SIEM complet, un EDR ou une suite de supervision d’entreprise très étendue. Il doit en revanche proposer un socle fonctionnel suffisamment solide pour être utilisé comme nouvelle solution produit.
+
+Le périmètre comprend la couche de collecte réseau, la couche d’analyse, la couche d’alerting, la journalisation des événements, l’export des données et l’interface web. Les modules de corrélation avancée, d’intelligence artificielle ou d’analyse prédictive peuvent être envisagés dans des évolutions futures, mais ils ne constituent pas un prérequis de la première version.
+
+## 5. Utilisateurs cibles
+
+Les utilisateurs visés sont les administrateurs réseau, les responsables sécurité, les équipes informatiques de PME, les intégrateurs, ainsi que les techniciens chargés d’exploiter la solution. L’interface doit permettre une lecture rapide des résultats et une prise en main sans formation longue.
+
+Le produit doit également être compréhensible par des décideurs techniques ou des responsables d’exploitation qui souhaitent disposer d’une vue synthétique de l’état du réseau et des événements importants.
+
+## 6. Exigences fonctionnelles détaillées
+
+- **F1.** Le système doit détecter les hôtes actifs sur une plage IP définie par l’utilisateur.
+- **F2.** Le système doit permettre le lancement d’un scan ponctuel ou programmé.
+- **F3.** Le système doit identifier les ports ouverts et remonter les services associés.
+- **F4.** Le système doit corréler les résultats de scan avec des informations réseau utiles à l’exploitation.
+- **F5.** Le système doit surveiller ou analyser un flux de trafic dans un contexte autorisé.
+- **F6.** Le système doit produire des alertes lorsque des comportements ou configurations suspects sont détectés.
+- **F7.** Le système doit conserver un historique des opérations et des alertes.
+- **F8.** Le système doit permettre l’export des résultats en JSON et en CSV.
+- **F9.** Le système doit proposer une interface web claire, ergonomique et cohérente.
+- **F10.** Le système doit afficher des indicateurs de synthèse exploitables rapidement.
+
+## 7. Exigences techniques
+
+Le backend doit être développé en Python avec FastAPI. Cette stack est retenue pour sa rapidité de développement, sa lisibilité et sa capacité à exposer des API structurées. Le frontend doit être développé en HTML, CSS et JavaScript, avec possibilité d’utiliser Bootstrap ou Tailwind CSS pour accélérer la mise en forme et garantir une interface moderne.
+
+L’architecture doit séparer clairement la présentation, la logique métier, la collecte réseau, l’analyse des données, le moteur d’alertes et la partie export. Le code devra être organisé en modules cohérents, avec une convention de nommage stable, une structure de dossier lisible et une documentation de démarrage claire.
+
+La solution doit pouvoir fonctionner dans un environnement serveur léger ou sur une machine de test standard. Les dépendances techniques doivent rester maîtrisées afin de permettre un déploiement simple et reproductible.
+
+## 8. Exigences de sécurité
+
+OmniNet doit intégrer la sécurité dès la conception. Les opérations sensibles doivent être exécutées dans un cadre autorisé, les entrées utilisateur doivent être validées, les données sensibles doivent être protégées et les logs ne doivent pas exposer inutilement des informations critiques.
+
+L’application doit respecter les bonnes pratiques de base : contrôle des accès, séparation des responsabilités, validation des paramètres, gestion des erreurs, protection de l’interface contre les manipulations simples et traçabilité des actions. L’objectif est de fournir une solution crédible pour un usage professionnel.
+
+## 9. Exigences de performance et qualité
+
+La solution doit rester réactive lors du lancement d’un scan sur un périmètre raisonnable. L’affichage des résultats doit être rapide et lisible. Les données retournées doivent être cohérentes, et les alertes doivent avoir une valeur fonctionnelle claire.
+
+La qualité du projet sera jugée sur la stabilité, la cohérence de l’architecture, la qualité du code, la lisibilité de l’interface et la reproductibilité des résultats. Une documentation minimale mais sérieuse devra accompagner le produit.
+
+## 10. Exigences de test et validation
+
+La solution devra être testée sur un environnement de test avant toute présentation client. Les tests devront couvrir le scan réseau, la détection d’hôtes, l’identification des ports ouverts, l’affichage des services, la création des alertes et l’export des rapports.
+
+Des cas de tests devront être prévus pour des situations de défaillance : hôte indisponible, plage vide, export impossible, service non détecté, trafic absent ou paramètres erronés. Les résultats de test devront être documentés et servir de base à la recette de la solution.
+
+## 11. Déploiement et exploitation
+
+Le produit devra être déployable localement, sur un serveur interne ou dans un environnement de préproduction. Une procédure d’installation claire devra préciser les prérequis, les dépendances, le mode de lancement et les paramètres de configuration. L’objectif est de rendre la solution exploitable par l’entreprise ou par un client pilote sans complexité excessive.
+
+L’exploitation devra pouvoir être assurée par une petite équipe technique. Le produit devra donc être robuste, simple à maintenir et suffisamment documenté pour permettre une montée en charge progressive.
+
+## 12. Livrables attendus
+
+- Le code source complet de la solution.
+- Une documentation d’installation et d’utilisation.
+- Une interface web fonctionnelle.
+- Un système de logs et d’alertes.
+- Un mécanisme d’export JSON et CSV.
+- Une version finale testable et présentable.
+- Un support de présentation pour la soutenance ou la démonstration client.
+
+## 13. Critères d’acceptation
+
+Le projet sera considéré comme conforme si la solution permet de découvrir un réseau, d’identifier des ports et services, de produire des alertes cohérentes, d’exporter les résultats et de proposer une interface lisible. Le démonstrateur devra pouvoir illustrer clairement la valeur ajoutée de la solution pour un usage entreprise.
+
+La validation finale reposera sur la capacité du produit à répondre au besoin initial de l’entreprise : offrir une solution de supervision réseau simple, efficace, orientée sécurité et exploitable dans un cadre réel.
+
+## 14. Conclusion
+
+Ce cahier des charges technique décrit une solution conçue pour répondre à un besoin d’entreprise réel : créer une nouvelle offre de supervision et d’analyse réseau plus accessible, plus lisible et suffisamment robuste pour un usage professionnel.
+
+OmniNet doit constituer une base produit crédible, structurée et évolutive.
