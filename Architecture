@@ -65,9 +65,9 @@ L'architecture garantit la production de résultats directement exploitables : l
 └──────────────┘ └────────────────┘ └──────────────────┘
                          │
               ┌──────────▼──────────┐
-              │    Base SQLite       │
-              │ (événements, scans,  │
-              │  configuration)      │
+              │    Base SQLite      │
+              │ (événements, scans, │
+              │  configuration)     │
               └─────────────────────┘
 ```
 
@@ -134,6 +134,6 @@ L'installation se fait localement ou sur un serveur interne, assurant que les do
 │         │                  │           │
 │  ┌──────▼──────────────────▼────────┐  │
 │  │         Volume SQLite            │  │
-│  └──────────────────────────────────┘  │ss
+│  └──────────────────────────────────┘  │
 └────────────────────────────────────────┘
 ```
