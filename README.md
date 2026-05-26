@@ -10,16 +10,16 @@ Omninet est un laboratoire SOC (Security Operations Center) complet permettant l
 
 ```
 ┌─────────────────────────────────────────────────┐
-│                 Réseau: omninet-lab              │
-│                                                  │
+│                 Réseau: omninet-lab             │
+│                                                 │
 │  ┌──────────────┐   ┌──────────┐  ┌──────────┐  │
 │  │     soc      │   │ endpoint │  │ attacker │  │
 │  │  (FastAPI)   │   │ (alpine) │  │ (alpine) │  │
 │  │   :8000      │   │heartbeat │  │  attaque │  │
 │  │              │   │ 15-30s   │  │  cycle   │  │
 │  └──────┬───────┘   └──────────┘  └──────────┘  │
-│         │                                        │
-└─────────┼────────────────────────────────────────┘
+│         │                                       │
+└─────────┼───────────────────────────────────────┘
           │
           ▼
      localhost:8000
@@ -100,14 +100,14 @@ Le SOC est accessible sur `http://localhost:8000`.
 
 ## Interfaces
 
-| Interface | URL                            |
-|-----------|--------------------------------|
-| Dashboard | `http://localhost:8000/ui`     |
-| Alertes   | `http://localhost:8000/ui/alerts`  |
-| Événements| `http://localhost:8000/ui/events`  |
-| Endpoints | `http://localhost:8000/ui/endpoints` |
-| Scans     | `http://localhost:8000/ui/scans`    |
-| API docs  | `http://localhost:8000/docs`    |
+| Interface | URL                                   |
+|-----------|---------------------------------------|
+| Dashboard | `http://localhost:8000/ui`            |
+| Alertes   | `http://localhost:8000/ui/alerts`     |
+| Événements| `http://localhost:8000/ui/events`     |
+| Endpoints | `http://localhost:8000/ui/endpoints`  |
+| Scans     | `http://localhost:8000/ui/scans`      |
+| API docs  | `http://localhost:8000/docs`          |
 
 ---
 
@@ -115,23 +115,23 @@ Le SOC est accessible sur `http://localhost:8000`.
 
 Les containers `endpoint` et `attacker` génèrent du trafic automatiquement :
 
-| Container  | Action                              | Fréquence      |
-|------------|-------------------------------------|----------------|
-| `endpoint` | Heartbeats CPU/RAM/DISK (3 hosts)   | Toutes les 30s |
-| `attacker` | Port scan + Brute force + Flood + Intrusion | Cycle 60s |
+| Container  | Action                              | Fréquence          |
+|------------|-------------------------------------|--------------------|
+| `endpoint` | Heartbeats CPU/RAM/DISK (3 hosts)   | Toutes les 30s     |
+| `attacker` | Port scan + Brute force + Flood + Intrusion | Cycle 60s  |
 
 ---
 
 ## Stack technique
 
-| Composant | Technologie              |
-|-----------|--------------------------|
-| Backend   | Python 3.12, FastAPI     |
-| Auth      | JWT (python-jose), bcrypt|
+| Composant | Technologie                        |
+|-----------|------------------------------------|
+| Backend   | Python 3.12, FastAPI               |
+| Auth      | JWT (python-jose), bcrypt          |
 | Frontend  | HTML5, CSS3, JavaScript (vanilla)  |
-| Graphes   | Canvas API               |
-| Conteneur | Docker, Docker Compose   |
-| CI/CD     | GitHub Actions           |
+| Graphes   | Canvas API                         |
+| Conteneur | Docker, Docker Compose             |
+| CI/CD     | GitHub Actions                     |
 
 ---
 
@@ -142,7 +142,7 @@ Les containers `endpoint` et `attacker` génèrent du trafic automatiquement :
 | `product/README.md`   | Guide détaillé du lab SOC                      |
 | `product/RECETTE.md`  | Scénarios de test pas à pas                    |
 | `product/SECURITY.md` | Hardening Docker/TLS, checklist production     |
-| `product/ARCHITECTURE.md` | Architecture technique et flux de données |
+| `product/ARCHITECTURE.md` | Architecture technique et flux de données  |
 
 ---
 
