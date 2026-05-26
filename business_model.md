@@ -1,0 +1,120 @@
+# BUSINESS MODEL – OMNINET
+
+## 1. Méthodologie retenue
+
+Pour construire ce business model, la méthode la plus adaptée est le **Business Model Canvas**. Elle permet de décrire clairement la proposition de valeur, les clients, les revenus, les ressources, les coûts et les partenariats.
+
+Cette approche est pertinente pour OmniNet, car elle aide à passer d’une idée technique à un modèle d’utilisation et de diffusion réaliste.
+
+## 2. OmniNet en une phrase
+
+OmniNet est un outil de supervision et d’analyse réseau qui détecte les équipements, observe le trafic, identifie les ports et services, génère des alertes et exporte des rapports pour aider les petites structures à mieux maîtriser leur réseau.
+
+## 3. Proposition de valeur
+
+OmniNet apporte une visibilité réseau simple, rapide et orientée cybersécurité, avec une interface web claire, des alertes compréhensibles et des exports JSON/CSV exploitables.
+
+Sa valeur est de combiner plusieurs fonctions utiles dans un seul outil léger, au lieu de multiplier les solutions séparées pour le scan, la supervision et la détection.
+
+## 4. Segments de clientèle
+
+Les segments les plus pertinents pour OmniNet sont :
+
+- PME et petites structures IT qui veulent un outil abordable et facile à déployer.
+- Établissements d’enseignement qui ont besoin d’un support pédagogique concret.
+- Laboratoires et environnements de test pour la démonstration et l’analyse réseau.
+- Petites équipes cybersécurité qui cherchent une première couche de détection et d’alerte.
+
+## 5. Canaux de distribution
+
+Pour OmniNet, les canaux les plus réalistes sont :
+
+- GitHub pour le dépôt, la documentation et la diffusion du projet.
+- Déploiement local ou on-premise dans un réseau interne.
+- Présentation en démo lors de soutenances, audits ou ateliers.
+- Téléchargement d’une release avec installation simplifiée.
+
+## 6. Relations clients
+
+La relation client doit être pensée comme une relation de simplicité et d’autonomie.
+
+Pour OmniNet, l’objectif n’est pas de proposer un accompagnement commercial lourd, mais plutôt une documentation claire, un guide d’installation, une interface compréhensible et un support minimal via FAQ ou README.
+
+Dans une future version, on pourrait ajouter un support par ticket, des notifications et un espace de configuration avancée.
+
+## 7. Sources de revenus
+
+Pour un projet étudiant, OmniNet peut être présenté avec un modèle économique hybride et crédible :
+
+- Version gratuite open source avec les fonctions principales.
+- Version premium avec tableaux de bord avancés, règles de détection enrichies, historique étendu ou intégrations externes.
+- Services associés comme installation, personnalisation, formation et support.
+- Licence entreprise pour les organisations qui veulent une version adaptée à leur environnement.
+
+## 8. Ressources clés
+
+Les ressources indispensables pour OmniNet sont :
+
+- Le code backend Python/FastAPI.
+- L’interface web HTML/CSS/JavaScript.
+- Les bibliothèques de scan et d’analyse réseau.
+- La logique de détection et d’alerte.
+- La base de configuration et de logs.
+- La documentation projet.
+
+## 9. Activités clés
+
+Les activités clés du modèle OmniNet sont :
+
+- Développer les fonctionnalités réseau.
+- Maintenir les règles d’analyse et de détection.
+- Générer les alertes et les rapports.
+- Assurer l’évolution du produit.
+- Documenter et tester la solution.
+
+## 10. Partenaires clés
+
+Les partenaires les plus utiles seraient :
+
+- Les hébergeurs cloud ou serveurs internes pour le déploiement.
+- Les intégrateurs IT / ESN pour la diffusion future.
+- La communauté open source pour l’amélioration continue.
+- Les établissements de formation comme premiers utilisateurs ou partenaires de test.
+
+## 11. Structure de coûts
+
+Les coûts principaux d’OmniNet sont :
+
+- Le temps de développement.
+- Le test et la maintenance.
+- L’hébergement éventuel.
+- La documentation.
+- La sécurisation de l’application.
+
+Dans un modèle open source ou étudiant, les coûts sont faibles au départ, mais augmentent si la solution devient un vrai produit avec support, packaging, déploiement et maintenance.
+
+## 12. Positionnement économique
+
+Le meilleur positionnement pour OmniNet est celui d’un outil de supervision réseau orienté cybersécurité, accessible, léger et modulaire.
+
+Il ne cherche pas à concurrencer directement les grands acteurs du marché, mais à offrir une alternative claire pour les PME, les équipes pédagogiques et les environnements de test.
+
+## 13. Business Model Canvas résumé
+
+| Bloc | Contenu |
+|---|---|
+| Segments de clientèle | PME, équipes IT, établissements d’enseignement, labos, petites équipes cyber. |
+| Proposition de valeur | Supervision réseau simple, alertes, analyse cyber, exports JSON/CSV. |
+| Canaux | GitHub, release, démo, déploiement local, documentation. |
+| Relation client | Autonomie, documentation, interface claire, support minimal. |
+| Revenus | Freemium, licence premium, services, support, personnalisation. |
+| Ressources clés | Code, API, interface web, règles de détection, documentation. |
+| Activités clés | Développement, détection, alerting, reporting, tests, maintenance. |
+| Partenaires clés | Hébergement, intégrateurs, communauté open source, établissements de test. |
+| Structure de coûts | Développement, maintenance, hébergement, sécurité, documentation. |
+
+## 14. Conclusion
+
+Le business model d’OmniNet repose sur une logique simple : fournir un outil de supervision réseau utile, lisible et orienté cybersécurité, avec un modèle de diffusion réaliste pour un projet académique puis éventuellement extensible vers une offre open source ou premium.
+
+La méthodologie Business Model Canvas est particulièrement adaptée, car elle permet de présenter une vision claire et professionnelle du projet.
