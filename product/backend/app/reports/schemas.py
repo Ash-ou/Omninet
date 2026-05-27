@@ -15,4 +15,6 @@ class KPISummaryResponse(BaseModel):
     alerts_by_severity: dict[str, int]
     alerts_by_status: dict[str, int]
     events_last_24h: int
+    events_timeline: list[int]
+    alerts_timeline: list[int]
     top_sources: list[dict[str, Any]]

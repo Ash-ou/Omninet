@@ -92,6 +92,21 @@ def test_ui_endpoints_returns_html() -> None:
     assert "<html" in response.text.lower()
 
 
+def test_ui_settings_returns_html() -> None:
+    response = client.get("/ui/settings")
+    assert response.status_code == 200
+    assert "text/html" in response.headers["content-type"]
+    assert "<html" in response.text.lower()
+    assert "Paramètres" in response.text
+
+
+def test_ui_admin_users_returns_html() -> None:
+    response = client.get("/ui/admin/users")
+    assert response.status_code == 200
+    assert "text/html" in response.headers["content-type"]
+    assert "<html" in response.text.lower()
+
+
 def test_ui_scans_returns_html() -> None:
     response = client.get("/ui/scans")
     assert response.status_code == 200

@@ -22,3 +22,25 @@ class UserResponse(BaseModel):
 
     username: str
     role: str
+
+
+class CreateUserRequest(BaseModel):
+    """Requête de création d'utilisateur."""
+
+    username: str = Field(..., min_length=2, max_length=50, pattern=r"^[a-zA-Z0-9_-]+$")
+    password: str = Field(..., min_length=4, max_length=128)
+    role: str = Field(default="analyst", pattern=r"^(admin|analyst)$")
+
+
+class UpdateUserRequest(BaseModel):
+    """Requête de mise à jour d'utilisateur."""
+
+    password: str | None = Field(default=None, min_length=4, max_length=128)
+    role: str | None = Field(default=None, pattern=r"^(admin|analyst)$")
+
+
+class UserAdminResponse(BaseModel):
+    """Réponse utilisateur pour l'administration (sans mot de passe)."""
+
+    username: str
+    role: str

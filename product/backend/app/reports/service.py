@@ -192,6 +192,21 @@ def get_kpi_summary() -> dict:
             {"source": source, "count": count}
             for source, count in source_counter.most_common(5)
         ]
+        # Timeline des événements (semaine calendaire: Lun→Dim)
+        monday = (now - timedelta(days=now.weekday())).replace(hour=0, minute=0, second=0, microsecond=0)
+        events_timeline = [0] * 7
+        for e in events_service._events:
+            ts = datetime.fromisoformat(e["timestamp"])
+            if ts.tzinfo is None:
+                ts = ts.replace(tzinfo=timezone.utc)
+            diff = ts - monday
+            if 0 <= diff.days < 7:
+                events_timeline[diff.days] += 1
+        # Total scans
+        total_scans = sum(
+            1 for e in events_service._events
+            if "scan" in e.get("event_type", "").lower()
+        )
 
     with alerts_service._lock:
         total_alerts = len(alerts_service._alerts)
@@ -204,16 +219,21 @@ def get_kpi_summary() -> dict:
             for a in alerts_service._alerts
         )
         alerts_by_status = dict(status_counter)
+        # Timeline des alertes (semaine calendaire: Lun→Dim)
+        alerts_timeline = [0] * 7
+        for a in alerts_service._alerts:
+            raw = a.get("created_at") or a.get("timestamp")
+            if raw is None:
+                continue
+            ts = datetime.fromisoformat(raw) if isinstance(raw, str) else raw
+            if ts.tzinfo is None:
+                ts = ts.replace(tzinfo=timezone.utc)
+            diff = ts - monday
+            if 0 <= diff.days < 7:
+                alerts_timeline[diff.days] += 1
 
     with telemetry_service._lock:
         total_endpoints = len(telemetry_service._endpoints)
-
-    # Total scans (approximation basée sur les événements de type scan)
-    with events_service._lock:
-        total_scans = sum(
-            1 for e in events_service._events
-            if "scan" in e.get("event_type", "").lower()
-        )
 
     return {
         "total_events": total_events,
@@ -223,5 +243,7 @@ def get_kpi_summary() -> dict:
         "alerts_by_severity": alerts_by_severity,
         "alerts_by_status": alerts_by_status,
         "events_last_24h": events_last_24h,
+        "events_timeline": events_timeline,
+        "alerts_timeline": alerts_timeline,
         "top_sources": top_sources,
     }

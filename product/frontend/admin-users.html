@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Omninet — Scans</title>
+  <title>Omninet — Administration</title>
   <link rel="stylesheet" href="/ui/assets/styles.css" />
 </head>
-<body data-page="scans" data-auth="logged-out">
+<body data-page="settings" data-auth="logged-out">
 
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-brand"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -33,7 +33,7 @@
           <rect x="2" y="2" width="8" height="8" rx="1" /><rect x="14" y="14" width="8" height="8" rx="1" /><path d="M6 10v1a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3v-1" />
         </svg>
       </a>
-      <a href="/ui/scans" class="sidebar-link active" data-nav="scans">
+      <a href="/ui/scans" class="sidebar-link" data-nav="scans">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
         </svg>
@@ -53,7 +53,7 @@
   <div class="main">
     <header class="topbar">
       <div class="topbar-left">
-        <div class="topbar-title">Simulation de scans</div>
+        <div class="topbar-title">Administration</div>
       </div>
       <div class="topbar-right">
         <div class="topbar-status">
@@ -66,69 +66,62 @@
     </header>
 
     <div class="content">
-      <div class="scan-grid">
-        <div class="glass">
-          <div class="glass-header">
-            <h2>Nouveau scan</h2>
-          </div>
-          <div class="glass-body">
-            <form id="scan-form" class="form-grid">
-              <div class="field">
-                <label for="scan-endpoint-id">Endpoint ID</label>
-                <input id="scan-endpoint-id" type="text" required placeholder="ep-001" />
-              </div>
-              <div class="field">
-                <label for="scan-target">Cible</label>
-                <input id="scan-target" type="text" required placeholder="10.0.0.1:443" />
-              </div>
-              <div class="field">
-                <label for="scan-type">Type de scan</label>
-                <select id="scan-type">
-                  <option value="ping">Ping</option>
-                  <option value="port">Port</option>
-                  <option value="service">Service</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="scan-severity">Sévérité</label>
-                <select id="scan-severity">
-                  <option value="low">Low</option>
-                  <option value="medium">Medium</option>
-                </select>
-              </div>
-              <button type="submit" class="btn btn-primary" style="justify-content:center">Lancer la simulation</button>
-            </form>
+      <div class="glass" style="margin-bottom:20px">
+        <div class="glass-header">
+          <h2>Gestion des utilisateurs</h2>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span id="user-count" style="font-size:0.82rem;color:var(--text-muted)"></span>
+            <button id="load-users" class="btn btn-primary">Charger</button>
           </div>
         </div>
-
-        <div class="glass">
-          <div class="glass-header">
-            <h2>Résultat</h2>
+        <div class="glass-body">
+          <div class="toolbar">
+            <div class="toolbar-group">
+              <label for="user-search">Recherche</label>
+              <input id="user-search" type="text" placeholder="Nom d'utilisateur…" />
+            </div>
+            <button id="btn-create-user" class="btn btn-primary">+ Nouvel utilisateur</button>
           </div>
-          <div class="glass-body">
-            <pre id="scan-result" class="result-block">Aucun scan simulé.</pre>
+        </div>
+      </div>
+
+      <div class="glass">
+        <div class="glass-header">
+          <h2>Utilisateurs</h2>
+          <span id="results-count" style="font-size:0.82rem;color:var(--text-muted)">0 résultats</span>
+        </div>
+        <div class="glass-body">
+          <div class="table-wrap">
+            <table id="user-results" class="data-table"></table>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div id="login-modal" class="modal-overlay">
+  <!-- Create/Edit User Modal -->
+  <div id="user-modal" class="modal-overlay">
     <div class="modal" style="position:relative">
-      <button class="modal-close" onclick="closeLoginModal()">&times;</button>
-      <h2>Connexion SOC</h2>
-      <p>Authentifiez-vous pour lancer des scans</p>
-      <form id="modal-login-form" class="form-grid">
+      <button class="modal-close" onclick="closeUserModal()">&times;</button>
+      <h2 id="user-modal-title">Nouvel utilisateur</h2>
+      <form id="user-form" class="form-grid">
         <div class="field">
-          <label for="modal-username">Identifiant</label>
-          <input id="modal-username" type="text" autocomplete="username" required placeholder="admin ou analyst" />
+          <label for="user-form-username">Nom d'utilisateur</label>
+          <input id="user-form-username" type="text" autocomplete="off" required placeholder="ex: analyste2" />
         </div>
         <div class="field">
-          <label for="modal-password">Mot de passe</label>
-          <input id="modal-password" type="password" autocomplete="current-password" required placeholder="&bull;&bull;&bull;&bull;&bull;&bull;" />
+          <label for="user-form-password">Mot de passe</label>
+          <input id="user-form-password" type="password" autocomplete="new-password" required placeholder="Minimum 4 caractères" />
         </div>
-        <button type="submit" class="btn btn-primary" style="justify-content:center">Se connecter</button>
-        <div id="modal-login-status" style="font-size:0.82rem;color:var(--text-muted);text-align:center;min-height:1.5em"></div>
+        <div class="field">
+          <label for="user-form-role">Rôle</label>
+          <select id="user-form-role">
+            <option value="analyst">Analyste</option>
+            <option value="admin">Administrateur</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary" style="justify-content:center">Enregistrer</button>
+        <div id="user-form-status" style="font-size:0.82rem;color:var(--text-muted);text-align:center;min-height:1.5em"></div>
       </form>
     </div>
   </div>

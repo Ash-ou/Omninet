@@ -75,6 +75,14 @@ def create_app() -> FastAPI:
     def ui_scans() -> FileResponse:
         return FileResponse(FRONTEND_DIR / "scans.html")
 
+    @app.get("/ui/settings", response_class=FileResponse)
+    def ui_settings() -> FileResponse:
+        return FileResponse(FRONTEND_DIR / "settings.html")
+
+    @app.get("/ui/admin/users", response_class=FileResponse)
+    def ui_admin_users() -> FileResponse:
+        return FileResponse(FRONTEND_DIR / "admin-users.html")
+
     app.mount(
         "/ui/assets",
         StaticFiles(directory=FRONTEND_DIR / "assets"),

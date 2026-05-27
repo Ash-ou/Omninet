@@ -3,19 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Omninet — Dashboard</title>
+  <title>Omninet — Paramètres</title>
   <link rel="stylesheet" href="/ui/assets/styles.css" />
 </head>
-<body data-page="dashboard" data-auth="logged-out">
+<body data-page="settings" data-auth="logged-out">
 
-  <!-- Sidebar -->
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-brand"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
 </svg></div>
-
     <nav class="sidebar-nav">
-      <a href="/ui" class="sidebar-link active" data-nav="dashboard">
+      <a href="/ui" class="sidebar-link" data-nav="dashboard">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <rect x="3" y="3" width="7" height="9" rx="1" /><rect x="14" y="3" width="7" height="5" rx="1" /><rect x="14" y="12" width="7" height="9" rx="1" /><rect x="3" y="16" width="7" height="5" rx="1" />
         </svg>
@@ -40,136 +38,118 @@
           <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
         </svg>
       </a>
-
       <div class="sidebar-separator"></div>
-
-      <a href="/ui/settings" class="sidebar-link" data-nav="settings" title="Paramètres">
+      <a href="/ui/settings" class="sidebar-link active" data-nav="settings" title="Paramètres">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
         </svg>
       </a>
     </nav>
-
     <div class="sidebar-footer">
       <div class="sidebar-user-avatar" id="sidebar-user-avatar">?</div>
     </div>
   </aside>
 
-  <!-- Main Content -->
   <div class="main">
     <header class="topbar">
       <div class="topbar-left">
-        <div class="topbar-title">Dashboard</div>
+        <div class="topbar-title">Paramètres</div>
       </div>
       <div class="topbar-right">
         <div class="topbar-status">
           <span class="topbar-status-dot"></span>
           <span>SOC en ligne</span>
         </div>
-        <span id="topbar-clock" style="font-size:0.82rem;color:var(--text-muted)"></span>
         <button id="btn-login" class="btn btn-ghost auth-hide">Connexion</button>
         <button id="btn-logout" class="btn btn-ghost auth-show" style="display:none">Déconnexion</button>
       </div>
     </header>
 
-    <div class="dashboard-grid">
-      <!-- Main Column -->
-      <div class="dashboard-main">
-        <!-- KPI Row -->
-        <div class="kpi-row">
-          <div class="kpi-card dark">
-            <div class="kpi-label">Alertes critiques</div>
-            <div class="kpi-value" id="count-alerts-new">—</div>
-            <div id="sparkline-alerts" class="kpi-sparkline"></div>
-          </div>
-          <div class="kpi-card light">
-            <div class="kpi-label">Alertes acquittées</div>
-            <div class="kpi-value" id="count-alerts-ack">—</div>
-          </div>
-          <div class="kpi-card light">
-            <div class="kpi-label">Événements total</div>
-            <div class="kpi-value" id="count-events-total">—</div>
-          </div>
-          <div class="kpi-card light">
-            <div class="kpi-label">Endpoints actifs</div>
-            <div class="kpi-value" id="count-endpoints-total">—</div>
-          </div>
+    <div class="content">
+      <!-- Profile Card -->
+      <div class="glass" style="margin-bottom:20px">
+        <div class="glass-header">
+          <h2>Mon profil</h2>
         </div>
-
-        <!-- Sessions Chart -->
-        <div class="chart-card">
-          <div class="chart-header">
-            <div class="chart-title">Évolution des événements (7 jours)</div>
-            <div style="display:flex;gap:8px;align-items:center">
-              <span id="chart-week-change" style="font-size:0.75rem;color:var(--text-muted)"></span>
-              <button id="refresh-dashboard" class="btn btn-ghost" style="padding:4px 10px;font-size:0.75rem">Actualiser</button>
-            </div>
-          </div>
-          <canvas id="chart-sessions" width="700" height="250"></canvas>
-        </div>
-
-        <!-- Top Sources -->
-        <div>
-          <div style="font-size:0.85rem;font-weight:600;margin-bottom:12px">Top types d'alertes</div>
-          <div class="sources-grid">
-            <div class="source-block">
-              <div class="source-icon">&#9888;</div>
-              <div class="source-value" id="count-severity-critical">—</div>
-              <div class="source-label">Critiques</div>
-              <div class="source-bar"><div class="source-bar-fill" id="bar-severity-critical" style="width:0%;background:#ef4444"></div></div>
-            </div>
-            <div class="source-block">
-              <div class="source-icon">&#9888;</div>
-              <div class="source-value" id="count-severity-high">—</div>
-              <div class="source-label">Élevées</div>
-              <div class="source-bar"><div class="source-bar-fill" id="bar-severity-high" style="width:0%;background:#f59e0b"></div></div>
-            </div>
-            <div class="source-block">
-              <div class="source-icon">&#9888;</div>
-              <div class="source-value" id="count-severity-medium">—</div>
-              <div class="source-label">Moyennes</div>
-              <div class="source-bar"><div class="source-bar-fill" id="bar-severity-medium" style="width:0%;background:#7c3aed"></div></div>
+        <div class="glass-body">
+          <div class="profile-info">
+            <div class="profile-avatar" id="profile-avatar">?</div>
+            <div class="profile-details">
+              <div class="profile-row">
+                <span class="profile-label">Utilisateur</span>
+                <span class="profile-value" id="profile-username">—</span>
+              </div>
+              <div class="profile-row">
+                <span class="profile-label">Rôle</span>
+                <span class="profile-value"><span id="profile-role-badge"></span></span>
+              </div>
+              <div class="profile-row">
+                <span class="profile-label">Session</span>
+                <span class="profile-value" id="profile-session">—</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Right Sidebar -->
-      <div class="dashboard-side">
-        <!-- Radar Chart -->
-        <div class="widget">
-          <div class="widget-title">Répartition par sévérité</div>
-          <canvas id="chart-radar" width="280" height="200"></canvas>
-          <div class="severity-legend" id="severity-legend"></div>
+      <!-- Admin: User Management -->
+      <div id="admin-section" class="glass" style="margin-bottom:20px;display:none">
+        <div class="glass-header">
+          <h2>Gestion des utilisateurs</h2>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span id="user-count" style="font-size:0.82rem;color:var(--text-muted)"></span>
+            <button id="load-users" class="btn btn-primary">Charger</button>
+          </div>
         </div>
-
-        <!-- Statistics -->
-        <div class="widget">
-          <div class="widget-title">Statistiques</div>
-          <div class="gauge-group">
-            <div class="gauge-item">
-              <div id="gauge-online"></div>
-              <div class="gauge-label">Activité 24h</div>
+        <div class="glass-body">
+          <div class="toolbar">
+            <div class="toolbar-group">
+              <label for="user-search">Recherche</label>
+              <input id="user-search" type="text" placeholder="Nom d'utilisateur…" />
             </div>
-            <div class="gauge-item">
-              <div id="gauge-resolution"></div>
-              <div class="gauge-label">Taux trait.</div>
-            </div>
-          </div>
-          <div class="stat-row">
-            <span class="stat-label">Alertes résolues</span>
-            <span class="stat-value" id="stat-resolved">—</span>
-          </div>
-          <div class="stat-row">
-            <span class="stat-label">Taux de résolution</span>
-            <span class="stat-value" id="stat-resolution-rate">—</span>
-          </div>
-          <div class="stat-row">
-            <span class="stat-label">Total alertes</span>
-            <span class="stat-value" id="stat-total-alerts">—</span>
+            <button id="btn-create-user" class="btn btn-primary">+ Nouvel utilisateur</button>
           </div>
         </div>
       </div>
+
+      <div id="admin-section-table" class="glass" style="display:none">
+        <div class="glass-header">
+          <h2>Utilisateurs</h2>
+          <span id="results-count" style="font-size:0.82rem;color:var(--text-muted)">0 résultats</span>
+        </div>
+        <div class="glass-body">
+          <div class="table-wrap">
+            <table id="user-results" class="data-table"></table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create/Edit User Modal -->
+  <div id="user-modal" class="modal-overlay">
+    <div class="modal" style="position:relative">
+      <button class="modal-close" onclick="closeUserModal()">&times;</button>
+      <h2 id="user-modal-title">Nouvel utilisateur</h2>
+      <form id="user-form" class="form-grid">
+        <div class="field">
+          <label for="user-form-username">Nom d'utilisateur</label>
+          <input id="user-form-username" type="text" autocomplete="off" required placeholder="ex: analyste2" />
+        </div>
+        <div class="field">
+          <label for="user-form-password">Mot de passe</label>
+          <input id="user-form-password" type="password" autocomplete="new-password" required placeholder="Minimum 4 caractères" />
+        </div>
+        <div class="field">
+          <label for="user-form-role">Rôle</label>
+          <select id="user-form-role">
+            <option value="analyst">Analyste</option>
+            <option value="admin">Administrateur</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary" style="justify-content:center">Enregistrer</button>
+        <div id="user-form-status" style="font-size:0.82rem;color:var(--text-muted);text-align:center;min-height:1.5em"></div>
+      </form>
     </div>
   </div>
 
@@ -178,7 +158,7 @@
     <div class="modal" style="position:relative">
       <button class="modal-close" onclick="closeLoginModal()">&times;</button>
       <h2>Connexion SOC</h2>
-      <p>Authentifiez-vous pour accéder au tableau de bord</p>
+      <p>Authentifiez-vous pour accéder aux paramètres</p>
       <form id="modal-login-form" class="form-grid">
         <div class="field">
           <label for="modal-username">Identifiant</label>
@@ -186,7 +166,7 @@
         </div>
         <div class="field">
           <label for="modal-password">Mot de passe</label>
-          <input id="modal-password" type="password" autocomplete="current-password" required placeholder="&bull;&bull;&bull;&bull;&bull;&bull;" />
+          <input id="modal-password" type="password" autocomplete="current-password" required placeholder="••••••" />
         </div>
         <button type="submit" class="btn btn-primary" style="justify-content:center">Se connecter</button>
         <div id="modal-login-status" style="font-size:0.82rem;color:var(--text-muted);text-align:center;min-height:1.5em"></div>

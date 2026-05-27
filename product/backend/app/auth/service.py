@@ -108,3 +108,84 @@ def get_user_from_token(token: str) -> dict | None:
     if username is None or role is None:
         return None
     return {"username": username, "role": role}
+
+
+# ─── Admin: user management ───
+
+
+def list_users() -> list[dict]:
+    """Liste tous les utilisateurs (sans le hash du mot de passe).
+
+    Returns:
+        Liste des utilisateurs avec username et role.
+    """
+    return [_user_to_safe(u) for u in _USERS.values()]
+
+
+def _user_to_safe(user: dict) -> dict:
+    """Retourne un utilisateur sans le champ hashed_password.
+
+    Args:
+        user: Dictionnaire utilisateur complet.
+
+    Returns:
+        Dictionnaire avec username et role uniquement.
+    """
+    return {"username": user["username"], "role": user["role"]}
+
+
+def create_user(username: str, password: str, role: str) -> dict | None:
+    """Crée un nouvel utilisateur.
+
+    Args:
+        username: Nom d'utilisateur.
+        password: Mot de passe en clair.
+        role: Rôle (admin ou analyst).
+
+    Returns:
+        L'utilisateur créé (safe), ou None si le nom existe déjà.
+    """
+    if username in _USERS:
+        return None
+    _USERS[username] = {
+        "username": username,
+        "role": role,
+        "hashed_password": _hash_password(password),
+    }
+    return _user_to_safe(_USERS[username])
+
+
+def update_user(username: str, password: str | None = None, role: str | None = None) -> dict | None:
+    """Met à jour un utilisateur existant.
+
+    Args:
+        username: Nom d'utilisateur.
+        password: Nouveau mot de passe (optionnel).
+        role: Nouveau rôle (optionnel).
+
+    Returns:
+        L'utilisateur mis à jour (safe), ou None si introuvable.
+    """
+    user = _USERS.get(username)
+    if user is None:
+        return None
+    if password is not None:
+        user["hashed_password"] = _hash_password(password)
+    if role is not None:
+        user["role"] = role
+    return _user_to_safe(user)
+
+
+def delete_user(username: str) -> bool:
+    """Supprime un utilisateur.
+
+    Args:
+        username: Nom d'utilisateur à supprimer.
+
+    Returns:
+        True si supprimé, False si introuvable ou utilisateur protégé.
+    """
+    if username not in _USERS:
+        return False
+    del _USERS[username]
+    return True

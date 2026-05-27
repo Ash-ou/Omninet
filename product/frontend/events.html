@@ -1,90 +1,144 @@
 <!doctype html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Omninet SOC - Événements</title>
-    <link rel="stylesheet" href="/ui/assets/styles.css" />
-  </head>
-  <body data-page="events">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Omninet — Événements</title>
+  <link rel="stylesheet" href="/ui/assets/styles.css" />
+</head>
+<body data-page="events" data-auth="logged-out">
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-brand"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+</svg></div>
+    <nav class="sidebar-nav">
+      <a href="/ui" class="sidebar-link" data-nav="dashboard">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="9" rx="1" /><rect x="14" y="3" width="7" height="5" rx="1" /><rect x="14" y="12" width="7" height="9" rx="1" /><rect x="3" y="16" width="7" height="5" rx="1" />
+        </svg>
+      </a>
+      <a href="/ui/alerts" class="sidebar-link" data-nav="alerts">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13.73 21a2 2 0 0 1-3.46 0" /><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+        </svg>
+      </a>
+      <a href="/ui/events" class="sidebar-link active" data-nav="events">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" />
+        </svg>
+      </a>
+      <a href="/ui/endpoints" class="sidebar-link" data-nav="endpoints">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="8" height="8" rx="1" /><rect x="14" y="14" width="8" height="8" rx="1" /><path d="M6 10v1a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3v-1" />
+        </svg>
+      </a>
+      <a href="/ui/scans" class="sidebar-link" data-nav="scans">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+      </a>
+      <div class="sidebar-separator"></div>
+      <a href="/ui/settings" class="sidebar-link" data-nav="settings" title="Paramètres">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+        </svg>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user-avatar" id="sidebar-user-avatar">?</div>
+    </div>
+  </aside>
+
+  <div class="main">
     <header class="topbar">
-      <div class="topbar-brand">Omninet SOC</div>
-      <nav class="topbar-nav" aria-label="Navigation principale">
-        <a href="/ui" data-nav="dashboard">Dashboard</a>
-        <a href="/ui/alerts" data-nav="alerts">Alertes</a>
-        <a href="/ui/events" data-nav="events">Événements</a>
-        <a href="/ui/endpoints" data-nav="endpoints">Endpoints</a>
-        <a href="/ui/scans" data-nav="scans">Scans</a>
-      </nav>
+      <div class="topbar-left">
+        <div class="topbar-title">Flux d'événements</div>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-status">
+          <span class="topbar-status-dot"></span>
+          <span>SOC en ligne</span>
+        </div>
+        <button id="btn-login" class="btn btn-ghost auth-hide">Connexion</button>
+        <button id="btn-logout" class="btn btn-ghost auth-show" style="display:none">Déconnexion</button>
+      </div>
     </header>
 
-    <main class="layout">
-      <section class="hero card">
-        <h1>Flux d'événements</h1>
-        <p>Analyse des événements remontés par les endpoints et les composants du lab SOC.</p>
-      </section>
-
-      <section class="card">
-        <h2>Authentification analyste</h2>
-        <form id="login-form" class="form-grid">
-          <div class="field">
-            <label for="username">Username</label>
-            <input id="username" name="username" type="text" autocomplete="username" required />
+    <div class="content">
+      <div class="glass" style="margin-bottom:20px">
+        <div class="glass-header">
+          <h2>Filtres</h2>
+          <button id="load-data" class="btn btn-primary">Charger</button>
+        </div>
+        <div class="glass-body">
+          <div class="toolbar">
+            <div class="toolbar-group">
+              <label for="search-input">Recherche</label>
+              <input id="search-input" type="text" placeholder="Texte libre…" />
+            </div>
+            <div class="toolbar-group">
+              <label for="sort-column">Trier</label>
+              <select id="sort-column"></select>
+            </div>
+            <div class="toolbar-group">
+              <label for="sort-direction">Ordre</label>
+              <select id="sort-direction">
+                <option value="desc">Desc</option>
+                <option value="asc">Asc</option>
+              </select>
+            </div>
+            <div class="toolbar-group">
+              <label for="page-size">Par page</label>
+              <select id="page-size">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+              </select>
+            </div>
           </div>
-          <div class="field">
-            <label for="password">Password</label>
-            <input id="password" name="password" type="password" autocomplete="current-password" required />
-          </div>
-          <button type="submit" class="btn-primary">Se connecter</button>
-        </form>
-        <div id="status" class="status" role="status" aria-live="polite"></div>
-        <div id="loading-indicator" class="loading hidden" role="status" aria-live="polite">Chargement…</div>
-      </section>
+        </div>
+      </div>
 
-      <section class="card">
-        <div class="section-head">
+      <div class="glass">
+        <div class="glass-header">
           <h2>Liste des événements</h2>
-          <button id="load-data" type="button" class="btn-secondary">Charger</button>
+          <span id="results-count" style="font-size:0.82rem;color:var(--text-muted)">0 résultats</span>
         </div>
-        <div class="filters">
-          <div class="field-inline">
-            <label for="search-input">Recherche</label>
-            <input id="search-input" type="text" placeholder="Texte libre" />
+        <div class="glass-body">
+          <div class="table-wrap">
+            <table id="results" class="data-table"></table>
           </div>
-          <div class="field-inline">
-            <label for="sort-column">Trier par</label>
-            <select id="sort-column"></select>
-          </div>
-          <div class="field-inline">
-            <label for="sort-direction">Ordre</label>
-            <select id="sort-direction">
-              <option value="desc">Descendant</option>
-              <option value="asc">Ascendant</option>
-            </select>
-          </div>
-          <div class="field-inline">
-            <label for="page-size">Par page</label>
-            <select id="page-size">
-              <option value="10">10</option>
-              <option value="25">25</option>
-              <option value="50">50</option>
-            </select>
+          <div class="pagination">
+            <button id="prev-page" class="btn btn-ghost">Précédent</button>
+            <span id="page-indicator">Page 1 / 1</span>
+            <button id="next-page" class="btn btn-ghost">Suivant</button>
           </div>
         </div>
-        <div class="section-head">
-          <div id="results-count" class="status" role="status" aria-live="polite">0 résultats</div>
-          <div class="filters">
-            <button id="prev-page" type="button" class="btn-secondary">Précédent</button>
-            <span id="page-indicator" class="status" aria-live="polite">Page 1 / 1</span>
-            <button id="next-page" type="button" class="btn-secondary">Suivant</button>
-          </div>
-        </div>
-        <div class="table-wrap">
-          <table id="results" class="data-table"></table>
-        </div>
-      </section>
-    </main>
+      </div>
+    </div>
+  </div>
 
-    <script src="/ui/assets/app.js"></script>
-  </body>
+  <div id="login-modal" class="modal-overlay">
+    <div class="modal" style="position:relative">
+      <button class="modal-close" onclick="closeLoginModal()">&times;</button>
+      <h2>Connexion SOC</h2>
+      <p>Authentifiez-vous pour accéder aux événements</p>
+      <form id="modal-login-form" class="form-grid">
+        <div class="field">
+          <label for="modal-username">Identifiant</label>
+          <input id="modal-username" type="text" autocomplete="username" required placeholder="admin ou analyst" />
+        </div>
+        <div class="field">
+          <label for="modal-password">Mot de passe</label>
+          <input id="modal-password" type="password" autocomplete="current-password" required placeholder="&bull;&bull;&bull;&bull;&bull;&bull;" />
+        </div>
+        <button type="submit" class="btn btn-primary" style="justify-content:center">Se connecter</button>
+        <div id="modal-login-status" style="font-size:0.82rem;color:var(--text-muted);text-align:center;min-height:1.5em"></div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/ui/assets/app.js"></script>
+</body>
 </html>
